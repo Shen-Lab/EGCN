@@ -3,7 +3,7 @@ Energy-based Graph Convolutional Networks for Scoring Protein Docking Models
 
 https://onlinelibrary.wiley.com/doi/abs/10.1002/prot.25888
 
-https://www.biorxiv.org/content/10.1101/2019.12.19.883371v1  (earlier version with the table below) 
+https://www.biorxiv.org/content/10.1101/2019.12.19.883371v1  (earlier version without the table below) 
 
 ![EGCN Architecture](/EGCN_fig1.png)
 

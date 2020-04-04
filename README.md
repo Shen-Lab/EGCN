@@ -6,20 +6,20 @@ Energy-based Graph Convolutional Networks for Scoring Protein Docking Models
 # Dependencies:
 * Tensorflow >= 1.13
 
-# File Explanation
-* model0_residue_based.py: main source code for EGCN
-* train.py:  training code 
+# File explanation:
+* src/model0_residue_based.py: main source code for EGCN
+* src/train.py:  training code 
 * feature_gen.py: generating features
 * rosetta_param.py: storing Rosetta parameters used in our features
 * sasa_cal.py: Calculate SASA features
 
-# Training Data Dependencies:
+# Training data dependencies:
 * [Piper](https://cluspro.bu.edu/downloads.php) 
 * [cNMA](https://github.com/Shen-Lab/cNMA)
 * [Freesasa](https://freesasa.github.io/)
 
 
-# citation:
+# Citation:
 
 ```
 @misc{cao2019energybased,

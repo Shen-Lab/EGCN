@@ -1,4 +1,7 @@
 # EGCN
+Energy-based Graph Convolutional Networks for Scoring Protein Docking Models
+
+![TALE Architecture](/ProteinFuncPred.png)
 
 # Dependencies:
 * Tensorflow >= 1.13

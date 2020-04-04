@@ -4,7 +4,7 @@ Energy-based Graph Convolutional Networks for Scoring Protein Docking Models
 ![EGCN Architecture](/EGCN_fig1.png)
 
 
-# Results:
+## Results:
 |  Dataset  | Model | Top 1  | Top 5 | Top 10 | 
 | :--- |:--- | :--- |:--- | :--- |
 | Benchmark test set (107)  | IRAD  |  10/0**/0*** |  30/13**/2*** | 40/18/7*** |
@@ -26,23 +26,23 @@ respectively, representing 62% and 150% increases compared to
 IRAD. Second, for the CAPRI test set, although the total number of
 targets (14) can be too few to provide statistical significance, EGCN again increased the number of at least acceptable, medium, and highquality top-5 models from IRAD's 4, 2, 0 to 6, 3, 2, respectively.
 
-# Dependencies:
+## Dependencies:
 * Tensorflow >= 1.13
 
-# File explanation:
+## File explanation:
 * src/model0_residue_based.py: main source code for EGCN
 * src/train.py:  training code 
 * feature_gen/feature_gen.py: generate features
 * feature_gen/rosetta_param.py: storing Rosetta parameters used in our features
 * feature_gen/sasa_cal.py: calculate SASA features
 
-# Training data dependencies:
+## Training data dependencies:
 * [Piper](https://cluspro.bu.edu/downloads.php) 
 * [cNMA](https://github.com/Shen-Lab/cNMA)
 * [Freesasa](https://freesasa.github.io/)
 
 
-# Citation:
+## Citation:
 
 ```
 @misc{cao2019energybased,

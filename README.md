@@ -34,7 +34,7 @@ Following the CAPRI convention, reported are the numbers of targets with at leas
 |    | RF  |   4/1**/1*** | 6/2**/1*** | 8/3/2*** |
 |    | EGCN | 5/1**/1*** | 6/3**/2*** | 7/4/2*** |
 |    | Best possible |  9/6**/3*** | 9/6**/3*** | 9/6**/3*** |
-| CAPRI core_set (13) | Score Set (13) | IRAD | 3/2**/0*** | 5/4**/1*** | 7/4**/2*** | 
+| CAPRI core_set (13) | IRAD | 3/2**/0*** | 5/4**/1*** | 7/4**/2*** | 
 |    | RF | 1/0**/0*** | 3/2**/0*** | 3/2**/1*** |
 |    | EGCN | 3/2**/0*** | 6/4**/1*** | 7/4**/1*** | 
 |    | Best Possible  | 11/9**/3*** | 11/9**/3*** | 11/9**/3*** | 

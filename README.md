@@ -61,6 +61,18 @@ See Fig. 3 in the Paper
 * [cNMA](https://github.com/Shen-Lab/cNMA)
 * [Freesasa](https://freesasa.github.io/)
 
+## Trained models:
+* Under trained_models/, we have a trained model.
+
+## Generate Features:
+* Go to feature_gen/, run `python sasa.cal.py` to generate sasa featurees.
+* Run `python feat_gen.py` to generate features.
+
+## Training:
+* Go to src/, run `python train.py`.
+
+## Evaluation:
+* Go to src/, run `python evaluate.py`.
 
 ## Citation:
 

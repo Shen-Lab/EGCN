@@ -1,0 +1,18 @@
+#!/bin/bash
+###ENVIRONMENT SETTINGS; CHANGE WITH CAUTION
+#SBATCH --export=NONE                #Do not propagate environment
+#SBATCH --get-user-env=L             #Replicate login environment
+#
+##NECESSARY JOB SPECIFICATIONS
+#SBATCH --job-name=target47       #Set the job name to "JobExample1"
+#SBATCH --time=50:00:00              #Set the wall clock limit to 1hr and 30min
+#SBATCH --ntasks=1                   #Request 1 task
+#SBATCH --mem=25600M                  #Request 2560MB (2.5GB) per node
+#SBATCH --output=target47.out      #Send stdout/err to "Example1Out.[jobID]"
+#SBATCH --account=122797755691
+#
+
+source activate L2L
+python feat_gen.py target47 temp/ 1 1050 
+
+

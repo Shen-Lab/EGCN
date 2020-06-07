@@ -64,21 +64,19 @@ intra_rec = []
 intra_lig = []
 inter = []
 
-def main_edge(pidx, didx, prot_name, output_path):
-     for n in range(pidx):
+def main_edge(input_files, output_path):
         intra_rec = []
         intra_lig = []
         inter = []
-        for i in range(didx):
-          pathr = "../3_decoys/"+prot_name+"_"+str(n+1)+"/smpr_"+str(i+1)
-          pathl = "../3_decoys/"+prot_name+"_"+str(n+1)+"/smpl_"+str(i+1)
+        for i in range(int(len(input_files)/2)):
+          pathr = input_files[i*2]
+          pathl = input_files[i*2+1]
           intra_rec =edge_features(pathr, pathr)
           intra_lig =edge_features(pathl, pathl)
           inter     =edge_features(pathr, pathl)          
-          print (n)
-          np.save(output_path+"/intra_rec_"+str(n*didx+i+1), intra_rec)
-          np.save(output_path+"/intra_lig_"+str(n*didx+i+1), intra_lig)
-          np.save(output_path+"/inter"+str(n*didx+i+1), inter)
+          np.save(output_path+"/intra_rec_"+str(i+1), intra_rec)
+          np.save(output_path+"/intra_lig_"+str(i+1), intra_lig)
+          np.save(output_path+"/inter"+str(i+1), inter)
 
 
 def node_features(prot_path):
@@ -127,38 +125,44 @@ def unbound_node(pidx, didx, prot_name, output_path):
      np.save(output_path+"/inter"+str(n+1), t3)
      '''
 
-def encounter_node(pidx, didx, prot_name, output_path):
-   for n in range(pidx):
+def encounter_node(input_files, output_path):
+   
      
-     for i in range(didx):
-         pathr = "../3_decoys/"+prot_name+"_"+str(n+1)+"/smpr_"+str(i+1)
-         pathl = "../3_decoys/"+prot_name+"_"+str(n+1)+"/smpl_"+str(i+1)
-         pathc = "../3_decoys/"+prot_name+"_"+str(n+1)+"/smpc_"+str(i+1)
+     for i in range(int(len(input_files)/2)):
+         pathr = input_files[i*2]
+         pathl = input_files[i*2+1]
+         pathc = "./complexsssss"
          os.system("cat "+pathr+' '+pathl+' > '+pathc)
+         os.system("sed -i s/HSE/HIS/g "+pathc)
          
          node_rec, rec_num=node_features(pathr)
          node_lig, lig_num=node_features(pathl)
          resilist = pre_pdb.prepocess_pdb(pathc)
          resilist = pre_pdb.cal_sasa(pathc, resilist)
-         os.system("rm "+pathc)         
-         print (len(resilist), len(node_rec), len(node_rec[0]))
+         os.system("rm "+pathc)        
+ 
          for j in range(rec_num):
             node_rec[j][2] = resilist[j]['SASA']
          for j in range(lig_num):
             node_lig[j][2] = resilist[j+rec_num]['SASA']
 
-         print ('node',n*didx+i+1, didx, n)    
-         np.save(output_path+"/node_rec_"+str(n*didx+i+1), node_rec)
-         np.save(output_path+"/node_lig_"+str(n*didx+i+1), node_lig)
+         print ('node', i+1)    
+         np.save(output_path+"/node_rec_"+str(i+1), node_rec)
+         np.save(output_path+"/node_lig_"+str(i+1), node_lig)
    
 
 def main():
-   prot_name = sys.argv[1]
+   #prot_name = sys.argv[1]
+   input_file_path = sys.argv[1]
    output_path =sys.argv[2]
-   pidx = int(sys.argv[3])
-   didx = int(sys.argv[4])
-   encounter_node(pidx, didx, prot_name, output_path)
-   main_edge(pidx, didx, prot_name, output_path)
+   #pidx = int(sys.argv[3])
+   #didx = int(sys.argv[4])
+   input_files = np.loadtxt(input_file_path, dtype='str')
+   if len(input_files)%2==1:
+      raise ValueError("Input_file_path error: The number of input files must be even (receptor and ligand).")
+   print (input_files)
+   encounter_node(input_files, output_path)
+   main_edge(input_files, output_path)
 
 '''
 def capri_set_gen():

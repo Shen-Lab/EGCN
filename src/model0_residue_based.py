@@ -50,7 +50,7 @@ class my_model():
 		self.edge_feature_length = edge_feature_length
 		self.residue_num = residue_num
 
-	def config(self, Wat_length=10, conv1_depth=4, conv2_depth=4, conv3_depth=4 ):
+	def config(self, Wat_length=10, conv1_depth=2, conv2_depth=5, conv3_depth=5 ):
 		self.Wat_length = Wat_length
 		self.conv1_depth = conv1_depth
 		self.conv2_depth = conv2_depth
@@ -60,11 +60,7 @@ class my_model():
 	def matmul(self, var,  transpose_a, transpose_b):
 		return tf.linalg.matmul(var[0], var[1], transpose_a=transpose_a, transpose_b=transpose_b)
 
-	def GCN_layer(self, p1_node_layershape, p2_node_layershape, edge_layershape, output_dim):
-		print (p1_node_layershape)
-		p1_node_layer =  Input(shape=(p1_node_layershape.as_list()[1], p1_node_layershape.as_list()[2]) , dtype='float32')
-		p2_node_layer =  Input(shape=(p2_node_layershape.as_list()[1], p2_node_layershape.as_list()[2]) , dtype='float32')
-		edge_layer =  Input(shape=(edge_layershape.as_list()[1], edge_layershape.as_list()[2],edge_layershape.as_list()[3]) , dtype='float32')
+	def GCN_layer(self, p1_node_layer, p2_node_layer, edge_layer, output_dim):
 
 		# ------------------------------------first around of convolution
 		print ('p1_node_layer', p1_node_layer.shape)
@@ -95,22 +91,17 @@ class my_model():
 		Conv_output_pre4 = LeakyReLU(alpha=0.3)(Conv_output_pre3)
 		Conv_output = BatchNormalization()(Conv_output_pre4)
 		
-		return Model(inputs=[p1_node_layer, p2_node_layer, edge_layer], outputs=Conv_output)
+		return Conv_output
 
 
 	def GCN_module_intra(self):
 		p1_node_layer =  Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 		p2_node_layer =  Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 		edge_layer    =  Input(shape=(self.residue_num, self.residue_num, self.edge_feature_length), dtype='float32') 
-		
-		GCN_model = self.GCN_layer(p1_node_layer.shape, p2_node_layer.shape, edge_layer.shape, self.conv1_depth)
-		GCN_output_1 = GCN_model([p1_node_layer, p2_node_layer, edge_layer])
 
-		GCN_model = self.GCN_layer(GCN_output_1.shape, GCN_output_1.shape, edge_layer.shape, self.conv2_depth)
-		GCN_output_2 = GCN_model([GCN_output_1, GCN_output_1, edge_layer])
-
-		GCN_model = self.GCN_layer(GCN_output_2.shape, GCN_output_2.shape, edge_layer.shape, self.conv3_depth)
-		GCN_output_3 = GCN_model([GCN_output_2, GCN_output_2, edge_layer])
+		GCN_output_1 = self.GCN_layer(p1_node_layer, p2_node_layer, edge_layer, self.conv1_depth)
+		GCN_output_2 = self.GCN_layer(GCN_output_1, GCN_output_1, edge_layer, self.conv2_depth)
+		GCN_output_3 = self.GCN_layer(GCN_output_2, GCN_output_2, edge_layer, self.conv3_depth)
 
 		return Model(inputs=[p1_node_layer, p2_node_layer, edge_layer], outputs=GCN_output_3)
 
@@ -120,19 +111,15 @@ class my_model():
 		edge_layer    =  Input(shape=(self.residue_num, self.residue_num, self.edge_feature_length), dtype='float32')
 		
 		edge_layer_transpose =  Permute((2,1,3))(edge_layer)
-		
-		GCN_model = self.GCN_layer(p1_node_layer.shape, p2_node_layer.shape, edge_layer.shape, self.conv1_depth)	
-		GCN_output_1a = GCN_model([p1_node_layer, p2_node_layer, edge_layer])
-		GCN_output_1b = GCN_model([p2_node_layer, p1_node_layer, edge_layer_transpose])
-		
-		GCN_model = self.GCN_layer(GCN_output_1a.shape, GCN_output_1b.shape, edge_layer.shape, self.conv2_depth)
-		GCN_output_2a = GCN_model([GCN_output_1a,  GCN_output_1b, edge_layer])
-		GCN_output_2b = GCN_model([GCN_output_1b,  GCN_output_1a, edge_layer_transpose])
+	
+		GCN_output_1a = self.GCN_layer(p1_node_layer, p2_node_layer, edge_layer, self.conv1_depth)
+		GCN_output_1b = self.GCN_layer(p2_node_layer, p1_node_layer, edge_layer_transpose, self.conv1_depth)
 
-		GCN_model = self.GCN_layer(GCN_output_2a.shape, GCN_output_2b.shape, edge_layer.shape, self.conv3_depth)
-		GCN_output_3a = GCN_model([GCN_output_2a,  GCN_output_2b, edge_layer])
-		GCN_output_3b = GCN_model([GCN_output_2b,  GCN_output_2a, edge_layer_transpose])	
+		GCN_output_2a = self.GCN_layer(GCN_output_1a, GCN_output_1b, edge_layer, self.conv2_depth)
+		GCN_output_2b = self.GCN_layer(GCN_output_1b, GCN_output_1a, edge_layer_transpose, self.conv2_depth)
 		
+		GCN_output_3a = self.GCN_layer(GCN_output_2a, GCN_output_2b, edge_layer, self.conv3_depth)
+		GCN_output_3b = self.GCN_layer(GCN_output_2b, GCN_output_2a, edge_layer_transpose, self.conv3_depth)
 
 		return Model(inputs=[p1_node_layer, p2_node_layer, edge_layer], outputs=[GCN_output_3a, GCN_output_3b])
 
@@ -156,7 +143,7 @@ class my_model():
 		return atten_out
 
 
-	def energy_module(self, name):
+	def folding_stablility_module(self, name):
 		p1_node_layer =  Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 		p2_node_layer =  Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 		edge_layer    =  Input(shape=(self.residue_num, self.residue_num, self.edge_feature_length), dtype='float32') 
@@ -170,8 +157,6 @@ class my_model():
 			GCN_out_list = GCN_part([p1_node_layer, p2_node_layer, edge_layer])
 			GCN_out = Concatenate(axis=-2)(GCN_out_list)
 		print ('GCN_out', GCN_out)
-		
-	
 		#  multi_head_attention_part
 		attn_out = self.multi_head_attention(GCN_out)
 
@@ -226,8 +211,8 @@ class my_model():
 		unbound_rec_node_feature = Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 		unbound_lig_node_feature = Input(shape=(self.residue_num, self.node_feature_length), dtype='float32')
 
-		intra_energy_module = self.energy_module('intra_model')
-		inter_energy_module  = self.energy_module('inter_model')
+		intra_energy_module = self.folding_stablility_module('intra_model')
+		inter_energy_module  = self.folding_stablility_module('inter_model')
 
 		score_rec_intra   = intra_energy_module([rec_node_feature, rec_node_feature, rec_intra_edge_feature])
 		score_lig_intra   = intra_energy_module([lig_node_feature, lig_node_feature, lig_intra_edge_feature])

@@ -1,4 +1,4 @@
-name: L2L
+name: EGCN
 channels:
   - defaults
 dependencies:
@@ -44,5 +44,5 @@ dependencies:
     - termcolor==1.1.0
     - werkzeug==0.15.2
     - wrapt==1.11.1
-prefix: /scratch/user/cyppsp/anaconda3/envs/L2L
+prefix: /scratch/user/cyppsp/anaconda3/envs/EGCN
 

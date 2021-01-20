@@ -79,13 +79,18 @@ See Fig. 3 in the Paper
 ## Citation:
 
 ```
-@misc{cao2019energybased,
-    title={Energy-based Graph Convolutional Networks for Scoring Protein Docking Models},
-    author={Yue Cao and Yang Shen},
-    year={2019},
-    eprint={1912.12476},
-    archivePrefix={arXiv},
-    primaryClass={q-bio.BM}
+@article{EGCN,
+author = {Cao, Yue and Shen, Yang},
+title = {Energy-based graph convolutional networks for scoring protein docking models},
+journal = {Proteins: Structure, Function, and Bioinformatics},
+volume = {88},
+number = {8},
+pages = {1091-1099},
+keywords = {energy-based models, graph convolutional networks, machine learning, protein docking, protein-protein interactions, quality estimation, scoring function},
+doi = {https://doi.org/10.1002/prot.25888},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/prot.25888},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1002/prot.25888},
+year = {2020}
 }
 ```
 

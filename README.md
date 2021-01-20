@@ -34,10 +34,12 @@ Following the CAPRI convention, reported are the numbers of targets with at leas
 |    | RF  |   4/1**/1*** | 6/2**/1*** | 8/3/2*** |
 |    | EGCN | 5/1**/1*** | 6/3**/2*** | 7/4/2*** |
 |    | Best possible |  9/6**/3*** | 9/6**/3*** | 9/6**/3*** |
-| CAPRI core_set (13) | IRAD | 3/2**/0*** | 5/4**/1*** | 7/4**/2*** | 
+| CAPRI score_set (13) | IRAD | 3/2**/0*** | 5/4**/1*** | 7/4**/2*** | 
 |    | RF | 1/0**/0*** | 3/2**/0*** | 3/2**/1*** |
 |    | EGCN | 3/2**/0*** | 6/4**/1*** | 7/4**/1*** | 
-|    | Best Possible  | 11/9**/3*** | 11/9**/3*** | 11/9**/3*** | 
+|    | Best Possible  | 11/6**/3*** | 11/6**/3*** | 11/6**/3*** | 
+
+(Jan. 19, 2020) Please note the correction in the last row of the published table: the best possible outcomes for the CAPRI score_set were incorrectly reported 11/9**/3*** but should be 11/6**/3*** instead.  
 
 RF refers to our earlier random forest model from https://github.com/Shen-Lab/BAL (dependency 3)
 

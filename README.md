@@ -67,8 +67,9 @@ See Fig. 3 in the Paper
 * Under trained_models/, we have a trained model.
 
 ## Generate Features:
-* Go to feature_gen/, run `python sasa.cal.py` to generate sasa featurees.
-* Run `python feat_gen.py` to generate features.
+* Go to feature_gen/,  Run 
+* `python feat_gen.py  $path_to_your_input_file  $path_to_your_output_file  ` 
+* to generate features.
 
 ## Training:
 * Go to src/, run `python train.py`.

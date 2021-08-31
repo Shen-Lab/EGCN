@@ -67,8 +67,9 @@ See Fig. 3 in the Paper
 * Under trained_models/, we have a trained model.
 
 ## Generate Features:
+* Prepare a input file, with each line storing the path to your each pdb in your training set. 
 * Go to feature_gen/,  Run 
-* `python feat_gen.py  $path_to_your_input_file  $path_to_your_output_file  ` 
+* `python feat_gen.py  $path_to_your_input_file  $path_to_your_output_directory ` 
 * to generate features.
 
 ## Training:

@@ -67,7 +67,11 @@ See Fig. 3 in the Paper
 * Under trained_models/, we have a trained model.
 
 ## Generate Features:
-* Prepare a input file, with each line storing the path to your each pdb in your training set. 
+* Prepare a input file. Every two lines store the paths to the receptor and ligand of your pdb complex in your training set (the first line is receptor's path, the second line is ligand's path). An example is like this:
+  - ..../data/1ACB_r.pdb
+  - ..../data/1ACB_l.pdb
+  - ..../data/1DQJ_r.pdb
+  - ..../data/1DQJ_l.pdb 
 * Go to feature_gen/,  Run 
 * `python feat_gen.py  $path_to_your_input_file  $path_to_your_output_directory ` 
 * to generate features.
